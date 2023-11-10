@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import pika
 import sys
+import requests
 
 # to continually listen for events
 # establish a connection:
@@ -16,12 +17,13 @@ result = channel.queue_declare('', exclusive=False)
 queue_name = result.method.queue
 
 channel.queue_bind(exchange='exchange', queue=queue_name, routing_key="events")
+channel.queue_bind(exchange='exchange', queue=queue_name, routing_key="participants")
 
 print(' [*] Waiting for logs. To exit press CTRL+C')
 
 
 def callback(ch, method, properties, body):
-    print(f" [x] {method.routing_key}:{body}")
+    print(f" [x] {method.routing_key}:{body}") # if the routing key is "events" send to the events database, else send to participants
 
 
 channel.basic_consume(
