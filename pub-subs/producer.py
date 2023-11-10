@@ -9,7 +9,6 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('127.0.0.1'))
 channel = connection.channel()
 channel.exchange_declare(exchange='exchange', exchange_type='topic')
 
-
 # method to be called with some dictionary of information
 def publish_event(event_body):
     # establish a connection
@@ -17,8 +16,8 @@ def publish_event(event_body):
 
     # exchange: tldr- a mediator before queue
     # routing_key: the topic
+    channel.basic_publish(exchange='exchange', routing_key='events', body=message)
     print(f" [x] Sent {message}")
-    connection.close()
 
 def publish_participant(event_body):
     # establish a connection
@@ -28,6 +27,9 @@ def publish_participant(event_body):
     # routing_key: the topic
     channel.basic_publish(exchange='exchange', routing_key='participants', body=message)
     print(f" [x] Sent {message}")
+   
+
+def close_connection():
     connection.close()
 
 # store a fake event (placeholder for input
@@ -43,3 +45,4 @@ fake_participant = {"participant": "amy"}
 publish_event(fake_event)
 publish_participant(fake_participant)
 
+close_connection()

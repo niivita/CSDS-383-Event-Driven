@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import pika
 import sys
-import requests
 
 # to continually listen for events
 # establish a connection:
