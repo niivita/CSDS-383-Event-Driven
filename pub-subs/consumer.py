@@ -21,9 +21,10 @@ channel.queue_bind(exchange='exchange', queue=queue_name, routing_key="participa
 
 print(' [*] Waiting for logs. To exit press CTRL+C')
 
-
 def callback(ch, method, properties, body):
-    print(f" [x] {method.routing_key}:{body}") # if the routing key is "events" send to the events database, else send to participants
+    print(f" [x] {method.routing_key}:{body}") 
+    # FOR ANA AND CALLIE
+    # use routing key to see if is "events", then send to the events database, else send to participants
 
 
 channel.basic_consume(
