@@ -45,7 +45,7 @@ def random_event_desc():
 
 def random_event():
     event_dict = {}
-    event_id = uuid.uuid4()
+    event_id = str(uuid.uuid4())
     name = names.get_full_name()
     email = name.replace(" ", "").lower() + "@gmail.com"
     title, desc = random_event_desc()
@@ -58,17 +58,13 @@ def random_event():
     return event_dict
 
 
-def random_participant(event_id=uuid.uuid4()):
+def random_participant(event_id):
     part_dict = {}
-    part_dict["participantID"] = uuid.uuid4()
-    part_dict["eventID"] = event_id
+    part_dict["participantID"] = str(uuid.uuid4())
+    part_dict["eventID"] = str(event_id)
     name = names.get_full_name()
     email = name.replace(" ", "").lower() + "@gmail.com"
     part_dict["name"] = name
     part_dict["email"] = email
 
     return part_dict
-
-
-print(random_event())
-print(random_participant())

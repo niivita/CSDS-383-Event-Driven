@@ -1,30 +1,24 @@
 #!/usr/bin/env python
 import json
 import pika
+from randomgen import *
 
 connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
 channel = connection.channel()
 
-
-# TODO: generation 
 def generate_events_and_participants():
 
-    # store a fake event (placeholder for generated input)
-    fake_event = {"eventID": "1234567",
-              "time": "12:11 AM",
-              "date": "01/01/2001",
-              "title": "birthday",
-              "description": "describing",
-              "email": "fake_email@gmail.com"}
-    publish_event(fake_event)
+    # loop to generate events TODO: increase to 50-100 for final 
+    for i in range(1):
+        # generate the create event
+        event = random_event()
+        # publish event
+        publish_event(event)
 
-    # store a fake participant (placeholder for generated input)
-    fake_participant = {"participantID": "987654", 
-                        "eventID": "1234567", 
-                        "name": "Bob",
-                        "email": "email@yahoo.com"}
-
-    publish_participant(fake_participant)
+        # loop to generate participants TODO: increase to 5 for final
+        for x in range(1): 
+            # publish generated participant with same eventID
+            publish_participant(random_participant(event["eventID"]))
 
 
 # method to be called with some dictionary of event information
