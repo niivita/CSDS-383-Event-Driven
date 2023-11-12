@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 import pika
 import time
+import requests
+import json
+import urllib.parse
 
 # to continually listen for events
 # establish a connection:
@@ -29,6 +32,16 @@ def callback(ch, method, properties, body):
     # TODO: FOR ANA AND CALLIE
     # method.routing_key.split('_')[0] will be either "events" or "participants":
     # use routing key to see if is "events", then send to the events database, else send to participants
+    url= "https://t6r6u8jln4.execute-api.us-east-1.amazonaws.com/main/participants/?"
+    if method.routing_key.split(' ')[0] == "participants_queue":
+        print("Inserting participant:")
+        data = json.loads(body.decode('UTF-8'))
+        print(dict(data))
+        x = requests.post(url+urllib.parse.urlencode(data))
+        print(x)
+    else:
+        print("Not inserting anything")
+        print(method.routing_key.split(' '))
 
 channel.basic_qos(prefetch_count=1)
 channel.basic_consume(queue='events_queue', on_message_callback=callback)
