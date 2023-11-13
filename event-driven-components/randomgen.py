@@ -13,10 +13,11 @@ def random_time():
 
 
 def random_date():
+    year = random.randint(1970, 2023)
     month = random.randint(1, 12)
-    max_days = calendar.monthrange(2023, month)[1]
+    max_days = calendar.monthrange(year, month)[1]
     day = random.randint(1, max_days)
-    date = "{:02d}-{:02d}".format(month, day)
+    date = "{:02d}-{:02d}-{:04d}".format(month, day, year)
     return date
 
 
@@ -68,3 +69,7 @@ def random_participant(event_id):
     part_dict["email"] = email
 
     return part_dict
+
+
+print(random_event())
+
