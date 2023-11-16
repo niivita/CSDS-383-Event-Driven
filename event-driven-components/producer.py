@@ -8,15 +8,15 @@ channel = connection.channel()
 
 def generate_events_and_participants():
 
-    # loop to generate events TODO: increase to 50-100 for final 
-    for i in range(1):
+    # loop to generate events
+    for i in range(75):
         # generate the create event
         event = random_event()
         # publish event
         publish_event(event)
 
-        # loop to generate participants TODO: increase to 5 for final
-        for x in range(1): 
+        # loop to generate participants
+        for x in range(5): 
             # publish generated participant with same eventID
             publish_participant(random_participant(event["eventID"]))
 
